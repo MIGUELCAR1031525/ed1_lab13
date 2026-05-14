@@ -1,12 +1,10 @@
 package ed.lab.ed1labo04.controller;
 
 import ed.lab.ed1labo04.entity.Cart;
-import ed.lab.ed1labo04.entity.CartItem;
+import ed.lab.ed1labo04.model.CartRequest;
 import ed.lab.ed1labo04.service.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
@@ -30,4 +28,5 @@ public class CartController {
         return service.getById(id);
     }
 }
+
 

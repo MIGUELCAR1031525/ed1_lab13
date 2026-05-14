@@ -20,7 +20,7 @@ public class CartService {
         this.productService = productService;
     }
 
-    // ✅ Crear carrito
+    // ✅ CREAR CARRITO
     public Cart create(List<CartItem> requestItems) {
 
         List<CartItem> items = new ArrayList<>();
@@ -28,28 +28,30 @@ public class CartService {
 
         for (CartItem r : requestItems) {
 
-            // validar cantidad
+            // ✅ validar cantidad
             if (r.getQuantity() <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid quantity");
             }
 
+            // ✅ obtener producto
             Product p = productService.getById(r.getProductId());
 
-            // validar inventario
+            // ✅ validar inventario
             if (p.getQuantity() < r.getQuantity()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock");
             }
 
-            // restar inventario
+            // ✅ restar inventario
             p.setQuantity(p.getQuantity() - r.getQuantity());
 
-            // crear item final
+            // ✅ crear item final
             CartItem item = new CartItem();
             item.setProductId(p.getId());
             item.setName(p.getName());
             item.setPrice(p.getPrice());
             item.setQuantity(r.getQuantity());
 
+            // ✅ calcular total
             total += p.getPrice() * r.getQuantity();
 
             items.add(item);
@@ -62,7 +64,7 @@ public class CartService {
         return cartRepo.save(cart);
     }
 
-    // ✅ Obtener carrito
+    // ✅ OBTENER CARRITO
     public Cart getById(Long id) {
         return cartRepo.findById(id)
                 .orElseThrow(() ->
@@ -70,4 +72,5 @@ public class CartService {
                 );
     }
 }
+
 
